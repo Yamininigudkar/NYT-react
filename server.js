@@ -12,7 +12,7 @@ app.use(bodyParser.json());
 app.use(express.static("client/public"));
 
 //Setting a static path.
-app.use(express.static(path.join((__dirname, "./public"))));
+// app.use(express.static(path.join((__dirname, "./public"))));
 
 //Requiring the routes from the controllers.js file
 require("./controllers/articleController.js")(app);

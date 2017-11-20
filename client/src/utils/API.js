@@ -14,6 +14,9 @@ export default {
 	},
 	savedArticles:function() {
 		return axios.get("/api/saved");
+	},
+	deleteArticle:function(id) {
+		return axios.delete("/api/saved/"+ id);
 	}
 
 };

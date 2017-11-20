@@ -61,23 +61,25 @@ handleInputChange = event => {
 //----------------------------------------------------------
 //save articles when save button is clicked
 //----------------------------------------------------------
-saveArticles = event => {
-  event.preventDefault();
-  console.log("save button clicked")
-  if (this.state.title) {
-    const articleData = {
-      title:this.headline.main,
-      url:this.web_url
+
+  saveArticle = event => {
+    var  id  = event.target.id
+    console.log(id)
+     var result = this.state.articles.filter(function (obj) {
+      return obj._id === id
+     })
+    console.log(result)
+    
+    var articleData = {
+      title:result[0].headline.main,
+      url:result[0].web_url
     }
     console.log(articleData)
-    API.saveArticle(
-      articleData
-
-      )
-    .then(res => this.showSavedArticles())
-    .catch(err => console.log(err));
+        
+     API.saveArticle(articleData)
+     .then(res => this.showSavedArticles())
   }
-};
+  
 
   //--------------------------------------------------------
   //Displaying saved articles
@@ -88,6 +90,14 @@ saveArticles = event => {
       this.setState({ saved: res.data})
       )
     .catch(err => console.log(err));
+  };
+  //---------------------------------------------------------
+  //Delete saved articles
+  //---------------------------------------------------------
+  deleteArticle = id => {
+    API.deleteArticle(id)
+      .then(res => this.showSavedArticles())
+      .catch(err => console.log(err));
   };
 
   
@@ -142,7 +152,8 @@ saveArticles = event => {
         {this.state.articles.map(article => {
           return (
             <ListItem
-            key={article._id}>
+            key={article._id}
+            >
             <strong>
             {article.headline.main}
             </strong>
@@ -150,7 +161,7 @@ saveArticles = event => {
             <a href={article.web_url}>
             {article.web_url}
             </a>
-            <ArticleBtn onClick={this.saveArticles}>Save</ArticleBtn>
+            <ArticleBtn id={article._id} onClick={this.saveArticle}>Save</ArticleBtn>
             </ListItem>
             );
         })}
@@ -169,7 +180,7 @@ saveArticles = event => {
           {this.state.saved.map(article => {
             return (
               <ListItem
-              key={article._id}>
+              key={article._id} >
               <strong>
               {article.title}
               </strong>
@@ -177,8 +188,10 @@ saveArticles = event => {
               <a href={article.url}>
               {article.url}
               </a>
-              <ArticleBtn onClick={this.saveArticles}>Remove</ArticleBtn>
+              <ArticleBtn onClick={() => this.deleteArticle(article._id)}>Remove</ArticleBtn>
+
               </ListItem>
+
               );
           })}
           </List>

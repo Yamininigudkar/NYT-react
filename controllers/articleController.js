@@ -2,7 +2,7 @@
 var express = require("express");
 var app = express();
 var path = require("path");
-var Article = require("./../models/Article.js");
+var Article = require("./../models/article.js");
 
 module.exports = function (app) {
   app.get("/", function (req, res) {

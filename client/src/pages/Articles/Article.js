@@ -34,9 +34,9 @@ handleInputChange = event => {
     });
   };
 
-  //----------------------------------------------------
-  //search nytimes api to finf relevent articles
-  //----------------------------------------------------
+  //----------------------------------------------------------------------------------------
+  //search nytimes api to find relevent articles based on topic,start and end year
+  //----------------------------------------------------------------------------------------
   handleFormSubmit = event => {
     // When the form is submitted, prevent its default behavior, get articles update the articles state
     event.preventDefault();
